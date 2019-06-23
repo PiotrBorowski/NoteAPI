@@ -11,6 +11,12 @@ mongoose.connect('mongodb://localhost/NoteDB');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//simple middleware
+app.use(function(req, res){
+    res.status(404).send({url: req.originalUrl + ' not found'})
+})
+
+
 var routes = require('./api/routes/noteRoutes');
 routes(app);
 
