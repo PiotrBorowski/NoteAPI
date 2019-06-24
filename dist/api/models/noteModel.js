@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var NoteSchema = new Schema({
@@ -18,5 +19,5 @@ var NoteSchema = new Schema({
         default: ['existing']
     }
 });
-module.exports = mongoose.model('Notes', NoteSchema);
+exports.Note = mongoose.model('Notes', NoteSchema);
 //# sourceMappingURL=noteModel.js.map

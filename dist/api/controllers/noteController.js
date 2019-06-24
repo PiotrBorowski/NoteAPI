@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require('mongoose'), Note = mongoose.model('Notes');
 exports.getAllNotes = function (req, res) {
     Note.find({}, function (err, note) {

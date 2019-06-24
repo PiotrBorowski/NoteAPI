@@ -4,6 +4,7 @@ import routes from './api/routes/noteRoutes'
 var app = express(),
   port = process.env.PORT || 3000,
   mongoose = require('mongoose'),
+  Note = require('./api/models/noteModel'),
   bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
