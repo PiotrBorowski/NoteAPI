@@ -1,8 +1,12 @@
 'use strict';
-var mongoose = require('mongoose');
+
+import mongoose from "mongoose";
+import INote from '../interfaces/note.interface';
+import Status from '../enums/note.enum';
+
 var Schema = mongoose.Schema;
 
-var NoteSchema = new Schema({
+const NoteSchema = new Schema({
     body: {
         type: String,
         required: 'body of the note'
@@ -12,12 +16,11 @@ var NoteSchema = new Schema({
         default: Date.now
     },
     status: {
-        type:[{
-            type: String,
-            enum: ['existing', 'archived']
-        }],
+        type: Status,
         default: ['existing']
     }
 })
 
-export const Note = mongoose.model('Notes', NoteSchema);
+const NoteModel = mongoose.model<INote & mongoose.Document>('Note', NoteSchema);
+
+export default NoteModel;
