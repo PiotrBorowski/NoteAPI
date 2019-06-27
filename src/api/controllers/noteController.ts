@@ -41,27 +41,42 @@ class NoteController implements IController{
     }
     private readNote = function(req : express.Request, res : express.Response){
         NoteModel.findById(req.params.noteId, function(err : any, note : INote){
-            if(err)
-                res.send(err);
-            res.json(note);
+            //if(err)
+            //    res.send(err);
+            if(note){
+                res.json(note);
+            }
+            else{
+                res.status(404).send({error: 'Note not found'});
+            }
         })
     }
     
     private updateNote = function(req : express.Request, res : express.Response){
         NoteModel.findOneAndUpdate({_id: req.params.noteId}, req.body, {new: true}, function(err : any, note : INote){
-            if (err)
-                res.send(err);
-            res.json(note);
+            //if (err)
+            //    res.send(err);
+            if(note){
+                res.json(note);
+            }
+            else{
+                res.status(404).send({error: 'Note update error'});
+            }
         } )
     }
     
     private deleteNote = function(req : express.Request, res : express.Response){
-        NoteModel.remove({
-            _id: req.params.noteId
-        }, function(err : any){
-            if(err)
-                res.send(err);
-            res.json({message: 'Note deleted'});
+        NoteModel.findByIdAndDelete(req.params.noteId)
+        .then((resp) => {
+            if(resp){
+                res.send(200);
+            }
+            else{
+                res.status(404).send({rror: `Note with id: ${req.params.noteId} not found`});
+            }
+        })
+        .catch((err) =>{
+            res.status(404).send({rror: `Note with id: ${req.params.noteId} not found`});
         })
     }
 }

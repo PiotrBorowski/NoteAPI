@@ -19,6 +19,7 @@ class App {
         this.connectToDB();
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
+        this.initializePageNotFound();
     }
     listen() {
         this.app.listen(process.env.PORT || 3000, () => {
@@ -31,13 +32,15 @@ class App {
     initializeMiddlewares() {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
-        // this.app.use((req : express.Request, res : express.Response) => {
-        //     res.status(404).send({url: req.originalUrl + ' not found'});
-        // })
     }
     initializeControllers(controllers) {
         controllers.forEach((controller) => {
             this.app.use('/', controller.router);
+        });
+    }
+    initializePageNotFound() {
+        this.app.use((req, res) => {
+            res.status(404).send({ url: req.originalUrl + ' not found' });
         });
     }
 }

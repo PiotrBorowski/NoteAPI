@@ -11,7 +11,7 @@ class App {
         this.connectToDB();
         this.initializeMiddlewares();   
         this.initializeControllers(controllers);
-
+        this.initializePageNotFound();
     }
 
     public listen(){
@@ -27,15 +27,18 @@ class App {
     private initializeMiddlewares(){
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(bodyParser.json());
-        // this.app.use((req : express.Request, res : express.Response) => {
-        //     res.status(404).send({url: req.originalUrl + ' not found'});
-        // })
     }
 
     private initializeControllers(controllers: IController[]){
         controllers.forEach((controller) => {
             this.app.use('/', controller.router);
         })
+    }
+
+    private initializePageNotFound(){
+        this.app.use((req : express.Request, res : express.Response) => {
+            res.status(404).send({url: req.originalUrl + ' not found'});
+         })
     }
 }
 
